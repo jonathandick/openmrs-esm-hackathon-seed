@@ -3,6 +3,6 @@
     "^.+\\.tsx?$": "babel-jest"
   },
   "moduleNameMapper": {
-    "\\.(css|less)$": "<rootDir>/__mocks__/mockcss.js"
+    "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
   }
 }
