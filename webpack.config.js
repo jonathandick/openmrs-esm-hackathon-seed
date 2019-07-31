@@ -2,9 +2,9 @@ const path = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 
 module.exports = {
-  entry: path.resolve(__dirname, "src/hackathon-seed.tsx"),
+  entry: path.resolve(__dirname, "src/order-entry.tsx"),
   output: {
-    filename: "hackathon-seed.js",
+    filename: "order-entry.js",
     libraryTarget: "system",
     path: path.resolve(__dirname, "dist")
   },
@@ -15,15 +15,20 @@ module.exports = {
           system: false
         }
       },
+
       {
         test: /\.css$/i,
         use: [
           "style-loader",
           {
-            loader: "css-loader"
+            loader: "css-loader",
+            options: {
+              modules: true
+            }
           }
         ]
       },
+
       {
         test: /\.m?(js|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,

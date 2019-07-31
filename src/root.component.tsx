@@ -1,7 +1,21 @@
 import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+
+import OrderEntry from "./order-entry/order-entry.component";
 
 export default function Root(props: RootProps) {
-  return <div className="test">Hackathon seed is working!</div>;
+  return (
+    <div>
+      <OrderEntry />
+    </div>
+    /*
+    <BrowserRouter basename="/openmrs/spa/patient">
+      <Route exact path="/" component={OrderEntry} />
+    </BrowserRouter>
+*/
+  );
 }
 
-type RootProps = {};
+type RootProps = {
+  patientUuid: string;
+};
