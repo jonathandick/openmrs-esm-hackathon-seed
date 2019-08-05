@@ -1,8 +1,10 @@
 .container {
   display: inline-grid;
   grid-template-columns: 400px 400px;
-  grid-template-rows: 500px;
-  grid-template-areas: "drug-search order-basket";
+  grid-template-rows: 250px 250px;
+  grid-template-areas:
+    "drug-search order-form"
+    "order-basket order-form";
 }
 
 .drugSearch {
@@ -13,4 +15,39 @@
 .orderBasket {
   grid-area: order-basket;
   background-color: yellow;
+}
+
+.invalid {
+  background-color: red;
+}
+
+.valid {
+  background-color: green;
+}
+
+input:invalid {
+  border-color: #900;
+  background-color: #fdd;
+}
+
+input:focus:invalid {
+  outline: none;
+}
+
+select:invalid {
+  border-color: #900;
+  background-color: #fdd;
+}
+
+select:focus:invalid {
+  outline: none;
+}
+
+textarea:invalid {
+  border-color: #900;
+  background-color: #fdd;
+}
+
+textarea:focus:invalid {
+  outline: none;
 }

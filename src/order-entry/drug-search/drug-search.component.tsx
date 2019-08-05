@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { doSearch } from "./drug-search.resource";
+import { doSearch } from "../../resources/drug.resource";
 
 export default function DrugSearch(props: DrugSearchProps) {
   const [doDrugSearch, setDoDrugSearch] = useState(false);
@@ -30,36 +30,46 @@ export default function DrugSearch(props: DrugSearchProps) {
     setDrugSearchTerm($event.target.value);
   }
 
+  function createDrugOrderForm(result) {
+    props.setOrderData({ drug: result });
+    props.setDoCreateDrugOrderForm(true);
+    setResults([]);
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange}></input>
         <input type="submit" value="Search"></input>
       </form>
-      <table>
-        <tr>
-          <th>#</th>
-          <th>Drug</th>
-          <th>Strength</th>
-          <th></th>
-        </tr>
-        {results.length > 0 &&
-          results.map((result, i) => [
-            <tr>
-              <td>{i + 1}</td>
-              <td>{result.display}</td>
-              <td>{result.strength}</td>
-              <td>
-                <button onClick={evt => props.setDrug(result)}>Order</button>
-              </td>
-            </tr>
-          ])}
-      </table>
+      {results.length > 0 && (
+        <table>
+          <tr>
+            <th>#</th>
+            <th>Drug</th>
+            <th>Strength</th>
+            <th></th>
+          </tr>
+          {results.length > 0 &&
+            results.map((result, i) => [
+              <tr>
+                <td>{i + 1}</td>
+                <td>{result.display}</td>
+                <td>{result.strength}</td>
+                <td>
+                  <button onClick={evt => createDrugOrderForm(result)}>
+                    Order
+                  </button>
+                </td>
+              </tr>
+            ])}
+        </table>
+      )}
     </div>
   );
 }
 
 type DrugSearchProps = {
-  drug: {};
-  setDrug(drug: {}): void;
+  setOrderData(orderData: {}): void;
+  setDoCreateDrugOrderForm(x: boolean): void;
 };
