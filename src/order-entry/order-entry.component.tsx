@@ -12,6 +12,9 @@ export default function OrderEntry(props: OrderEntryPropsType) {
   const [orderBasket, setOrderBasket] = useState([]);
   const [orderData, setOrderData] = useState({});
   const [doCreateDrugOrderForm, setDoCreateDrugOrderForm] = useState(false);
+  const [doGetExistingPatientOrders, setDoGetExistingPatientOrders] = useState(
+    true
+  );
 
   //console.log("Rendering OrderEntry component");
 
@@ -27,6 +30,8 @@ export default function OrderEntry(props: OrderEntryPropsType) {
           patientUuid={props.patientUuid}
           setDoCreateDrugOrderForm={setDoCreateDrugOrderForm}
           setOrderData={setOrderData}
+          doGetExistingPatientOrders={doGetExistingPatientOrders}
+          setDoGetExistingPatientOrders={setDoGetExistingPatientOrders}
         />
       </div>
       <div className={styles.container}>
@@ -57,6 +62,7 @@ export default function OrderEntry(props: OrderEntryPropsType) {
             setOrderBasket={setOrderBasket}
             setOrderData={setOrderData}
             setDoCreateDrugOrderForm={setDoCreateDrugOrderForm}
+            setDoGetExistingPatientOrders={setDoGetExistingPatientOrders}
           />
         </div>
       </div>

@@ -25,7 +25,8 @@ export function createOrder(data, signal) {
     method: "POST",
     signal: signal,
     headers: {
-      Accept: "application/json"
+      Accept: "application/json",
+      "Content-Type": "application/json "
     },
     body: JSON.stringify(data)
   }).then(res => {
@@ -44,7 +45,7 @@ const data = {
   careSetting: "6f0c9a92-6f24-11e3-af88-005056821db0",
   encounter: "f91093d0-2fdb-4d0c-95b9-7d28e26eddfe",
   frequency: "160862OFAAAAAAAAAAAAAAA",
-  drug: "fc92c351-8a85-41b9-95bf-a7dfea46c9cd",
+  drug: "18f43c99-2329-426e-97b5-c3356e6afe54",
   dosingType: "org.openmrs.SimpleDosingInstructions",
   dose: 1,
   doseUnits: "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",

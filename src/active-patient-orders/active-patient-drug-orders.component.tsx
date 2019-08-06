@@ -1,34 +1,29 @@
 import React, { useState } from "react";
 import {
   getActivePatientOrders,
-  createOrder
+  createOrder,
+  postTest
 } from "../resources/order.resource";
 
 export default function PatientOrders(props: PatientOrdersProps) {
   const mockActiveOrder1 = {};
 
-  const [existingPatientOrders, setExistingPatientOrders] = useState([
-    "Order 1",
-    "Order 2"
-  ]);
-  const [doGetExistingPatientOrders, setDoGetExistingPatientOrders] = useState(
-    true
-  );
+  const [existingPatientOrders, setExistingPatientOrders] = useState([]);
 
   const abortController = new AbortController();
 
   React.useEffect(() => {
-    if (doGetExistingPatientOrders) {
+    if (props.doGetExistingPatientOrders) {
       getActivePatientOrders(props.patientUuid, abortController.signal)
         .then(x => {
           setExistingPatientOrders(x.results);
           //console.log(x.results);
         })
         .finally(() => {
-          setDoGetExistingPatientOrders(false);
+          props.setDoGetExistingPatientOrders(false);
         });
     }
-  }, [doGetExistingPatientOrders]);
+  }, [props.doGetExistingPatientOrders]);
 
   function handleRenewOrder(order: {}) {
     props.setOrderData({}); //need way to get order data
@@ -48,14 +43,24 @@ export default function PatientOrders(props: PatientOrdersProps) {
       orderer: "e89cae4a-3cb3-40a2-b964-8b20dda2c985"
     };
 
-    createOrder(payload, abortController.signal);
+    createOrder(payload, abortController.signal).then(x => {
+      //console.log(x);
+      props.setDoGetExistingPatientOrders(true);
+    });
   }
 
   return (
     <div>
+      <input
+        type="button"
+        value="Test Posting an Order"
+        onClick={$evt => {
+          postTest().then(x => props.setDoGetExistingPatientOrders(true));
+        }}
+      ></input>
       Existing Orders:
       <table>
-        {existingPatientOrders &&
+        {existingPatientOrders.length > 0 &&
           existingPatientOrders.map(order => [
             <tr>
               <td>
@@ -66,15 +71,16 @@ export default function PatientOrders(props: PatientOrdersProps) {
                   Discontinue
                 </button>
               </td>
-              // @ts-ignore
-              <td>{order.display}</td>
+
+              <td>
+                {
+                  // @ts-ignore
+                  order.display
+                }
+              </td>
             </tr>
           ])}
       </table>
-      <button
-        onClick={$evt => 1 + 1} //console.log(existingPatientOrders)}
-        value="Show Orders"
-      />
     </div>
   );
 }
@@ -83,4 +89,6 @@ type PatientOrdersProps = {
   patientUuid: string;
   setDoCreateDrugOrderForm(x: boolean): void;
   setOrderData({}): void;
+  setDoGetExistingPatientOrders(boolean): void;
+  doGetExistingPatientOrders: boolean;
 };
